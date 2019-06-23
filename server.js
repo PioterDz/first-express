@@ -1,29 +1,17 @@
 var express = require('express');
-var fs = require('fs');
-var bodyParser = require('body-parser');
 var app = express();
-var stringifyFile;
 
-app.use(bodyParser.json());
+app.use(express.static('assets'));
 
-app.get('/getNote', function(req, res) {
-    console.log("Zapytanie " + req.url + " odebrane.");
-
-    fs.readFile('./test.json', 'utf8', function(err, data) {
-        if (err) throw err;
-        stringifyFile = data
-        res.send(data);
-    });
-
+app.get('/', function (req, res) {
+    res.send('Hello world');
 });
 
-app.post('./updateNote/:note', function(req, res) {
-    res.send(stringifyFile + req.params.note);
+var server = app.listen(3000, 'localhost', function() {
+    var host = server.address().address;
+    var port = server.address().port;
 
-    fs.writeFile('./test.json', stringifyFile, function(err) {
-        if (err) throw err;
-        console.log('file updated');
-    });
+    console.log('Przykładowa aplikacja nasłuchuje na http://' + host + ':' + port);
 });
 
 
