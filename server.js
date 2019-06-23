@@ -1,26 +1,34 @@
 var express = require('express');
 var app = express();
+var fs = require('fs');
+app.set('view engine', 'pug');
+app.set('views','./views');
+var data;
 
-app.use(function(req, res, next){
-    console.log('Jestem pośrednikiem przy żądaniu do /store');
-    next();
+
+app.get('/login', function(req, res){
+    res.render('login', {
+        url: "www.google.com",
+    });
 });
 
-app.get('/store', function (req, res) {
-    res.send('To jest sklep');
+app.get('/nextpage', function(req, res) {
+    res.render('nextpage');
 });
 
-app.get('/', function(req, res) {
-    res.send('Hello World');
+app.post('/nextpage/:id', function(req, res){
+    
+    fs.writeFile('./log.json', data, function(err) {
+        if (err) throw err;
+        data = res.json({login: req.query.login});
+        res.send(data);
+    });
 });
 
-var server = app.listen(3000, 'localhost', function() {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('Przykładowa aplikacja nasłuchuje na http://' + host + ':' + port);
+app.listen(3000);
+app.use(function (req, res, next) {
+    res.status(404).send('Wybacz, nie mogliśmy odnaleźć tego, czego żądasz!')
 });
-
 
 
 
