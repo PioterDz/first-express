@@ -1,18 +1,29 @@
 var express = require('express');
 var app = express();
 
+app.get('/', function(req, res) {
+    res.send('Hello World');
+});
+
 app.use(function(req, res, next){
     console.log('Jestem pośrednikiem przy żądaniu do /store');
     next();
 });
 
+app.use(function(req, res, next) {
+    console.log('Autoryzacja użytkownika');
+    next();
+})
+
+app.use(function(req, res, next) {
+    console.log('Sprawdzanie uprawnień');
+    next();
+})
+
 app.get('/store', function (req, res) {
     res.send('To jest sklep');
 });
 
-app.get('/', function(req, res) {
-    res.send('Hello World');
-});
 
 var server = app.listen(3000, 'localhost', function() {
     var host = server.address().address;
