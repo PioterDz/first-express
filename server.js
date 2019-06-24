@@ -3,8 +3,6 @@ var app = express();
 var fs = require('fs');
 app.set('view engine', 'pug');
 app.set('views','./views');
-var data;
-
 
 app.get('/login', function(req, res){
     res.render('login', {
@@ -13,15 +11,14 @@ app.get('/login', function(req, res){
 });
 
 app.get('/nextpage', function(req, res) {
-    res.render('nextpage');
-});
-
-app.post('/nextpage/:id', function(req, res){
-    
-    fs.writeFile('./log.json', data, function(err) {
-        if (err) throw err;
-        data = res.json({login: req.query.login});
-        res.send(data);
+    const response = {
+        login: req.query.login,
+        password: req.query.password
+    };
+    console.log(response.login, 'response');
+    res.render('nextpage', {
+        user: response.login,
+        url: 'www.google.com'
     });
 });
 

@@ -4,5 +4,8 @@ html
         title Login to Google
     body
         include ./header.pug
-        header Witamy {#login}, życzymy miłego dnia.
+        if(user)
+            h1 Hi, #{user}
+        else
+            a(href="/login") Sign Up
         include ./footer.pug
