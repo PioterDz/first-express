@@ -11,13 +11,8 @@ app.get('/login', function(req, res){
 });
 
 app.get('/nextpage', function(req, res) {
-    const response = {
-        login: req.query.login,
-        password: req.query.password
-    };
-    console.log(response.login, 'response');
     res.render('nextpage', {
-        user: response.login,
+        user: req.query.login,
         url: 'www.google.com'
     });
 });
