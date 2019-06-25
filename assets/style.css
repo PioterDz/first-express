@@ -1,0 +1,11 @@
+form {
+    background-color: lightgrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 100px;
+}
+p {
+    font-family: Arial, Helvetica, sans-serif;
+}
