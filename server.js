@@ -7,10 +7,6 @@ app.get('/', function (req, res) {
     res.sendFile('/index.html');
 });
 
-app.get('/', function(req, res) {
-    res.sendFile('/style.css');
-});
-
 app.get('/userform', function (req, res) {
     const response = {
         first_name: req.query.first_name,
