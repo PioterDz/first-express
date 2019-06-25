@@ -7,18 +7,10 @@ app.get('/', function(req, res) {
 
 app.use(function(req, res, next){
     console.log('Jestem pośrednikiem przy żądaniu do /store');
-    next();
-});
-
-app.use(function(req, res, next) {
     console.log('Autoryzacja użytkownika');
-    next();
-})
-
-app.use(function(req, res, next) {
     console.log('Sprawdzanie uprawnień');
     next();
-})
+});
 
 app.get('/store', function (req, res) {
     res.send('To jest sklep');
