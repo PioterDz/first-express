@@ -5,17 +5,26 @@ app.get('/', function(req, res) {
     res.send('Hello World');
 });
 
-app.use(function(req, res, next){
+app.use('/store', communicate, authorize, checkPermisson, getStore);
+
+function communicate(req, res, next) {
     console.log('Jestem pośrednikiem przy żądaniu do /store');
+    next();
+}
+
+function authorize(req, res, next) {
     console.log('Autoryzacja użytkownika');
+    next();
+}
+
+function checkPermisson(req, res, next) {
     console.log('Sprawdzanie uprawnień');
     next();
-});
+}
 
-app.get('/store', function (req, res) {
+function getStore(req, res) {
     res.send('To jest sklep');
-});
-
+}
 
 var server = app.listen(3000, 'localhost', function() {
     var host = server.address().address;
