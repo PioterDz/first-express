@@ -1,14 +1,38 @@
 var express = require('express');
-var fs = require('fs');
 var app = express();
 
 app.get('/', function(req, res) {
-    console.log('Otrzymałem żądanie GET do strony głównej');
     res.send('Hello World');
 });
 
-app.listen(3000);
+app.use('/store', communicate, authorize, checkPermisson, getStore);
 
-app.use(function (req, res, next) {
-    res.status(404).send('Wybacz, nie mogliśmy odnaleźć tego, czego żądasz!')
+function communicate(req, res, next) {
+    console.log('Jestem pośrednikiem przy żądaniu do /store');
+    next();
+}
+
+function authorize(req, res, next) {
+    console.log('Autoryzacja użytkownika');
+    next();
+}
+
+function checkPermisson(req, res, next) {
+    console.log('Sprawdzanie uprawnień');
+    next();
+}
+
+function getStore(req, res) {
+    res.send('To jest sklep');
+}
+
+var server = app.listen(3000, 'localhost', function() {
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log('Przykładowa aplikacja nasłuchuje na http://' + host + ':' + port);
 });
+
+
+
+
